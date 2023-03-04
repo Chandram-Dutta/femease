@@ -2,9 +2,9 @@
 
 import 'package:calendar_view/calendar_view.dart';
 import 'package:femease/menstruation_cycle/presentation/pages/menstruation_cycle_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MenstrualDatePage extends ConsumerStatefulWidget {
@@ -24,7 +24,7 @@ class MenstrualDatePage extends ConsumerStatefulWidget {
 }
 
 class _MenstrualDatePageState extends ConsumerState<MenstrualDatePage> {
-  DateTime _selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now().subtract(const Duration(days: 1));
 
   @override
   Widget build(BuildContext context) {
@@ -45,39 +45,33 @@ class _MenstrualDatePageState extends ConsumerState<MenstrualDatePage> {
               "Please select the date of your last period",
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            TextButton(
-              onPressed: () async {
-                _selectedDate = await showDatePicker(
-                      context: context,
-                      currentDate: DateTime.now(),
-                      initialDate: _selectedDate,
-                      firstDate: DateTime(2023),
-                      lastDate: DateTime.now(),
-                    ) ??
-                    DateTime.now();
-                setState(
-                  () {},
-                );
-              },
-              child: Text(
-                "Select Date: ${DateFormat.yMd().format(_selectedDate)}",
+            SizedBox(
+              height: 500,
+              width: MediaQuery.of(context).size.width,
+              child: CupertinoDatePicker(
+                mode: CupertinoDatePickerMode.date,
+                initialDateTime: _selectedDate,
+                maximumDate: DateTime.now().add(const Duration(days: 1)),
+                onDateTimeChanged: (date) {
+                  setState(() {
+                    _selectedDate = date;
+                  });
+                },
               ),
             ),
             FilledButton(
               onPressed: () async {
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.setBool('isDataPresent', true);
-                final event = CalendarEventData(
-                  title: "Next Menstrual Cycle",
-                  date: (_selectedDate).add(
-                    const Duration(days: 28),
-                  ),
-                  endDate: (_selectedDate).add(
-                    const Duration(days: 34),
-                  ),
-                  event: "Next Menstrual Cycle",
-                );
-                CalendarControllerProvider.of(context).controller.add(event);
+                final DateTime date = _selectedDate;
+                CalendarControllerProvider.of(context).controller.add(
+                      CalendarEventData(
+                        title: "Next Menstrual Cycle",
+                        date: (date).add(const Duration(days: 28)),
+                        endDate: (date).add(const Duration(days: 34)),
+                        event: "Next Menstrual Cycle",
+                      ),
+                    );
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
