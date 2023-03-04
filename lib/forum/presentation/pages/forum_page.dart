@@ -1,6 +1,8 @@
 import 'package:blur/blur.dart';
 import 'package:femease/forum/presentation/pages/fitness/fitness_page.dart';
+import 'package:femease/forum/presentation/pages/fun/fun_page.dart';
 import 'package:femease/forum/presentation/pages/mental_health/mental_page.dart';
+import 'package:femease/forum/presentation/pages/yoga/yoga_page.dart';
 import 'package:flutter/material.dart';
 
 class ForumPage extends StatelessWidget {
@@ -77,11 +79,20 @@ class ForumPage extends StatelessWidget {
                         );
                       },
                     ),
-                    const ListTile(
-                      title: Text("Yoga and Meditation"),
-                      leading: Icon(Icons.self_improvement_rounded),
-                      subtitle: Text("Yoga and Meditation related discussions"),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                    ListTile(
+                      title: const Text("Yoga and Meditation"),
+                      leading: const Icon(Icons.self_improvement_rounded),
+                      subtitle:
+                          const Text("Yoga and Meditation related discussions"),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const YogaPage(),
+                          ),
+                        );
+                      },
                     ),
                     const ListTile(
                       leading: Icon(Icons.business),
@@ -89,17 +100,25 @@ class ForumPage extends StatelessWidget {
                       subtitle: Text("Buisness powerhouse"),
                       trailing: Icon(Icons.arrow_forward_ios),
                     ),
-                    const ListTile(
-                      leading: Icon(Icons.female),
-                      title: Text("Menstrual Cycle"),
-                      subtitle: Text("Menstrual Cycle related discussions"),
-                      trailing: Icon(Icons.arrow_forward_ios),
-                    ),
-                    const ListTile(
-                      leading: Icon(Icons.piano),
-                      title: Text("Fun"),
-                      subtitle: Text("Just have some fun!"),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                    // const ListTile(
+                    //   leading: Icon(Icons.female),
+                    //   title: Text("Menstrual Cycle"),
+                    //   subtitle: Text("Menstrual Cycle related discussions"),
+                    //   trailing: Icon(Icons.arrow_forward_ios),
+                    // ),
+                    ListTile(
+                      leading: const Icon(Icons.piano),
+                      title: const Text("Fun"),
+                      subtitle: const Text("Just have some fun!"),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FunPage(),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

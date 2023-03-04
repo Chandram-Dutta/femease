@@ -2,13 +2,21 @@ import 'package:femease/authentication/repository/auth_repository.dart';
 import 'package:femease/forum/presentation/pages/forum_page.dart';
 import 'package:femease/habit/presentation/pages/habit_page.dart';
 import 'package:femease/menstruation_cycle/presentation/pages/menstruation_cycle_page.dart';
+import 'package:femease/menstruation_cycle/presentation/pages/question_page.dart';
 import 'package:femease/safety/presentation/pages/safety_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
+
+  Future<bool?> isActive() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isDataPresent');
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -121,10 +129,31 @@ class HomePage extends ConsumerWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MenstrualCyclePage(
-                              imageUrl: "assets/images/menstualcycle.png",
-                              tag: "menstrual",
-                            ),
+                            builder: (context) => FutureBuilder(
+                                future: isActive(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    if (snapshot.data ?? false) {
+                                      return const MenstrualQuestionPage();
+                                    } else {
+                                      return const MenstrualCyclePage(
+                                        imageUrl:
+                                            "assets/images/menstualcycle.png",
+                                        tag: "menstrual",
+                                      );
+                                    }
+                                  } else {
+                                    const Scaffold(
+                                      body: Center(
+                                        child: CupertinoActivityIndicator(),
+                                      ),
+                                    );
+                                  }
+                                  return const MenstrualQuestionPage(
+                                      // imageUrl: "assets/images/menstualcycle.png",
+                                      // tag: "menstrual",
+                                      );
+                                }),
                           ),
                         );
                       },

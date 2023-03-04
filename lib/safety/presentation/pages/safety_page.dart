@@ -74,7 +74,9 @@ class SafetyPage extends StatelessWidget {
                           ),
                         ),
                         trailing: FilledButton.icon(
-                          onPressed: () {},
+                          onPressed: () async {
+                            // await FlutterPhoneDirectCaller.callNumber();
+                          },
                           label: const Text("Contact"),
                           icon: const Icon(
                             Icons.call_outlined,
