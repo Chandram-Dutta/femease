@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "895763334632",
+    "project_id": "femease",
+    "storage_bucket": "femease.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895763334632:android:a6f50eaa0191813e4f905d",
+        "android_client_info": {
+          "package_name": "me.chandramdutta.femease"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "895763334632-hc7gh965v7hckep8mh4014lkhs9cq4k2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB80q1u8ZPGOLar7QSwWXdYKtGK6VCulv0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "895763334632-hc7gh965v7hckep8mh4014lkhs9cq4k2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
