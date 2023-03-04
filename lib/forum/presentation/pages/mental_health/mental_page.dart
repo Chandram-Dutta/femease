@@ -1,7 +1,7 @@
 import 'package:femease/forum/domain/question_model.dart';
-import 'package:femease/forum/presentation/controllers/forum_page_controller.dart';
-import 'package:femease/forum/presentation/pages/fitness/fitness_ask_page.dart';
 import 'package:femease/forum/presentation/pages/fitness/fitness_question_page.dart';
+import 'package:femease/forum/presentation/pages/mental_health/mental_ask_page.dart';
+import 'package:femease/forum/presentation/pages/mental_health/mental_question_page.dart';
 import 'package:femease/forum/repository/forum_repository.dart';
 import 'package:femease/user/repository/user_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,54 +22,64 @@ class MentalPage extends ConsumerWidget {
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const FitnessAskPage(),
+            builder: (context) => const MentalAskPage(),
           ),
         ),
         label: const Text("Ask"),
         icon: const Icon(Icons.add),
       ),
-      body: ref.watch(forumControllerProvider).when(
+      body: ref.watch(forumListProvider("mental")).when(
             data: (data) => ListView.builder(
               itemCount: data.docs.length,
               itemBuilder: (context, index) {
-                FitnessModel fitnessModel = FitnessModel.fromDocumentSnapshot(
+                QuestionModel questionModel =
+                    QuestionModel.fromDocumentSnapshot(
                   data.docs[index],
                 );
                 return ListTile(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FitnessQuestionPage(
-                        fitnessQuestion: data.docs[index],
+                  onTap: () {
+                    ref.read(testProvider.notifier).state = data.docs[index].id;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MentalQuestionPage(
+                          mentalQuestion: data.docs[index],
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                   title: Text(
-                    fitnessModel.title,
+                    questionModel.title,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   subtitle:
-                      ref.watch(getUserProvider(fitnessModel.askedBy)).when(
+                      ref.watch(getUserProvider(questionModel.askedBy)).when(
                             data: (data) => Text(
-                              "Asked by ${data.name} on ${DateFormat.yMMMMd().format(fitnessModel.askedWhen)}",
+                              "Asked by ${data.name} on ${DateFormat.yMMMMd().format(questionModel.askedWhen)}",
                             ),
                             error: (error, stack) => const Text("Error"),
                             loading: () => const CupertinoActivityIndicator(),
                           ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.comment),
-                      ref.watch(commentCountProvider(data.docs[index].id)).when(
-                            data: (data) => Text(
-                              data.toString(),
-                            ),
-                            error: (error, stack) => const Text("Error"),
-                            loading: () => const CupertinoActivityIndicator(),
-                          ),
-                    ],
-                  ),
+                  // trailing: Row(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   children: [
+                  //     const Icon(Icons.comment),
+                  //     ref
+                  //         .watch(
+                  //           commentCountProvider(
+                  //             "mental"
+                  //           ),
+                  //         )
+                  //         .when(
+                  //           data: (data) => Text(
+                  //             data.toString(),
+                  //           ),
+                  //           error: (error, stack) => const Text("Error"),
+                  //           loading: () => const CupertinoActivityIndicator(),
+                  //         ),
+                  //   ],
+                  // ),
                 );
               },
             ),

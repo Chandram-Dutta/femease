@@ -164,13 +164,7 @@ class _FitnessQuestionPageState extends ConsumerState<FitnessQuestionPage> {
               // ignore: provider_parameters
               ref
                   .watch(
-                    commentListProvider(
-                      // ignore: provider_parameters
-                      [
-                        widget.fitnessQuestion.id,
-                        "fitness",
-                      ],
-                    ),
+                    commentListProvider("fitness"),
                   )
                   .when(
                     data: (data) => ListView.builder(
@@ -209,3 +203,7 @@ class _FitnessQuestionPageState extends ConsumerState<FitnessQuestionPage> {
     );
   }
 }
+
+final testProvider = StateProvider<String>((ref) {
+  return "";
+});

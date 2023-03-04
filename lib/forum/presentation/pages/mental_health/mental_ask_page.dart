@@ -70,13 +70,13 @@ class _MentalAskPageState extends ConsumerState<MentalAskPage> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ask a Fitness Question"),
+        title: const Text("Ask a Mental Health Question"),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: state.isLoading
             ? null
             : () => ref.read(forumControllerProvider.notifier).ask(
-                  listName: "fitness",
+                  listName: "mental",
                   questionModel: QuestionModel(
                     title: _questionController.text,
                     description: _descriptionController.text,

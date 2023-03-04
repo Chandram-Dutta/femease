@@ -1,5 +1,6 @@
 import 'package:blur/blur.dart';
 import 'package:femease/forum/presentation/pages/fitness/fitness_page.dart';
+import 'package:femease/forum/presentation/pages/mental_health/mental_page.dart';
 import 'package:flutter/material.dart';
 
 class ForumPage extends StatelessWidget {
@@ -62,11 +63,19 @@ class ForumPage extends StatelessWidget {
                         );
                       },
                     ),
-                    const ListTile(
-                      title: Text("Mental Health"),
-                      leading: Icon(Icons.spa_outlined),
-                      subtitle: Text("Mental Health related discussions"),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                    ListTile(
+                      title: const Text("Mental Health"),
+                      leading: const Icon(Icons.spa_outlined),
+                      subtitle: const Text("Mental Health related discussions"),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MentalPage(),
+                          ),
+                        );
+                      },
                     ),
                     const ListTile(
                       title: Text("Yoga and Meditation"),

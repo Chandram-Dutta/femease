@@ -36,14 +36,17 @@ class FitnessPage extends ConsumerWidget {
                   data.docs[index],
                 );
                 return ListTile(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FitnessQuestionPage(
-                        fitnessQuestion: data.docs[index],
+                  onTap: () {
+                    ref.read(testProvider.notifier).state = data.docs[index].id;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FitnessQuestionPage(
+                          fitnessQuestion: data.docs[index],
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                   title: Text(
                     questionModel.title,
                     maxLines: 1,
@@ -57,29 +60,25 @@ class FitnessPage extends ConsumerWidget {
                             error: (error, stack) => const Text("Error"),
                             loading: () => const CupertinoActivityIndicator(),
                           ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.comment),
-                      ref
-                          .watch(
-                            commentCountProvider(
-                              // ignore: provider_parameters
-                              [
-                                data.docs[index].id,
-                                "fitness",
-                              ],
-                            ),
-                          )
-                          .when(
-                            data: (data) => Text(
-                              data.toString(),
-                            ),
-                            error: (error, stack) => const Text("Error"),
-                            loading: () => const CupertinoActivityIndicator(),
-                          ),
-                    ],
-                  ),
+                  // trailing: Row(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   children: [
+                  //     const Icon(Icons.comment),
+                  //     ref
+                  //         .watch(
+                  //           commentCountProvider(
+                  //             path,
+                  //           ),
+                  //         )
+                  //         .when(
+                  //           data: (data) => Text(
+                  //             data.toString(),
+                  //           ),
+                  //           error: (error, stack) => const Text("Error"),
+                  //           loading: () => const CupertinoActivityIndicator(),
+                  //         ),
+                  //   ],
+                  // ),
                 );
               },
             ),

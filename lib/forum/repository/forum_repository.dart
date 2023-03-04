@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:femease/forum/domain/comment_model.dart';
 import 'package:femease/forum/domain/question_model.dart';
+import 'package:femease/forum/presentation/pages/fitness/fitness_question_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 abstract class ForumRepository {
@@ -121,20 +122,20 @@ final forumListProvider =
 );
 
 final commentListProvider =
-    StreamProvider.family<QuerySnapshot<Map<String, dynamic>>, List<String>>(
-  (ref, commentIdAndListName) {
+    StreamProvider.family<QuerySnapshot<Map<String, dynamic>>, String>(
+  (ref, listName) {
     return ref.watch(firebaseForumRepositoryProvider).getCommentList(
-          commentIdAndListName[0],
-          commentIdAndListName[1],
+          ref.watch(testProvider),
+          listName,
         );
   },
 );
 
-final commentCountProvider = FutureProvider.family<int, List<String>>(
-  (ref, commentIdAndListName) {
+final commentCountProvider = FutureProvider.family<int, String>(
+  (ref, listName) {
     return ref.watch(firebaseForumRepositoryProvider).getCommentCount(
-          commentIdAndListName[0],
-          commentIdAndListName[1],
+          ref.watch(testProvider),
+          listName,
         );
   },
 );
