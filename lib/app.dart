@@ -1,6 +1,6 @@
 import 'package:femease/authentication/presentation/pages/sign_in_page.dart';
 import 'package:femease/authentication/repository/auth_repository.dart';
-import 'package:femease/main.dart';
+import 'package:femease/home/presentation/home_page.dart';
 import 'package:femease/onboarding/presentation/pages/onboarding.dart';
 import 'package:femease/user/repository/user_repository.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -14,46 +14,15 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: 'FemEase',
-      theme: FlexThemeData.light(
-        colors: const FlexSchemeColor(
-          primary: Color(0xff581026),
-          primaryContainer: Color(0xfffde0e2),
-          secondary: Color(0xff8d0b46),
-          secondaryContainer: Color(0xffffffff),
-          tertiary: Color(0xffc21261),
-          tertiaryContainer: Color(0xfffde0e2),
-          appBarColor: Color(0xffffffff),
-          error: Color(0xffb00020),
-        ),
-        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-        blendLevel: 9,
-        useMaterial3ErrorColors: true,
-        visualDensity: FlexColorScheme.comfortablePlatformDensity,
-        useMaterial3: true,
-        swapLegacyOnMaterial3: true,
+      theme: FlexThemeData.dark(
+        scheme: FlexScheme.redWine,
         fontFamily: 'Signika Negative',
-
-        // To use the playground font, add GoogleFonts package and uncomment
-        // fontFamily: GoogleFonts.notoSans().fontFamily,
+        useMaterial3: true,
       ),
-      darkTheme: FlexThemeData.light(
-        colors: const FlexSchemeColor(
-          primary: Color(0xff581026),
-          primaryContainer: Color(0xfffde0e2),
-          secondary: Color(0xff8d0b46),
-          secondaryContainer: Color(0xffffffff),
-          tertiary: Color(0xffc21261),
-          tertiaryContainer: Color(0xfffde0e2),
-          appBarColor: Color(0xffffffff),
-          error: Color(0xffb00020),
-        ),
-        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-        blendLevel: 9,
-        useMaterial3ErrorColors: true,
-        visualDensity: FlexColorScheme.comfortablePlatformDensity,
-        useMaterial3: true,
-        swapLegacyOnMaterial3: true,
+      darkTheme: FlexThemeData.dark(
+        scheme: FlexScheme.redWine,
         fontFamily: 'Signika Negative',
+        useMaterial3: true,
       ),
       home: ref.watch(firebaseAuthRepositoryProvider).currentUser?.uid == null
           ? const SignInPage()

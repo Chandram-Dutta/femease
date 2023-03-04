@@ -1,4 +1,4 @@
-import 'package:femease/main.dart';
+import 'package:femease/home/presentation/home_page.dart';
 import 'package:femease/onboarding/presentation/controllers/onboarding_controller.dart';
 import 'package:femease/user/domain/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';

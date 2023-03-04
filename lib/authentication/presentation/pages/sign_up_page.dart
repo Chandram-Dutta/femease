@@ -1,6 +1,6 @@
 import 'package:femease/authentication/presentation/controllers/sign_up_controller.dart';
 import 'package:femease/authentication/presentation/pages/sign_in_page.dart';
-import 'package:femease/main.dart';
+import 'package:femease/home/presentation/home_page.dart';
 import 'package:femease/onboarding/presentation/pages/onboarding.dart';
 import 'package:femease/user/repository/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';

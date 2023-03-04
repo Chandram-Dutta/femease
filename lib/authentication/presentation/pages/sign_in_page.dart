@@ -1,5 +1,6 @@
 import 'package:femease/authentication/presentation/controllers/sign_in_controller.dart';
 import 'package:femease/authentication/presentation/pages/sign_up_page.dart';
+import 'package:femease/home/presentation/home_page.dart';
 import 'package:femease/main.dart';
 import 'package:femease/onboarding/presentation/pages/onboarding.dart';
 import 'package:femease/user/repository/user_repository.dart';
