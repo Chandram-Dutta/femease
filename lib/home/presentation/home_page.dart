@@ -131,7 +131,7 @@ class HomePage extends ConsumerWidget {
                     ),
                     HomePageButton(
                       imageUrl: "assets/images/community.png",
-                      title: "Forum",
+                      title: "Community",
                       tag: 'forum',
                       navigateFunction: () {
                         Navigator.push(

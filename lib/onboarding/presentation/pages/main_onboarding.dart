@@ -47,7 +47,7 @@ class MainOnboarding extends StatelessWidget {
                   Text(
                     "Let's get started!",
                     style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: Theme.of(context).colorScheme.primary,
                           fontWeight: FontWeight.bold,
                         ),
                   ),

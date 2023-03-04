@@ -68,3 +68,8 @@ class FirebaseUserRepository extends UserRepository {
 final firebaseUserRepositoryProvider = Provider<UserRepository>((ref) {
   return FirebaseUserRepository();
 });
+
+final getUserProvider =
+    FutureProvider.family<UserModel, String>((ref, uid) async {
+  return ref.watch(firebaseUserRepositoryProvider).getUser(uid);
+});
