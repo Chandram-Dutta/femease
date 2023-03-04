@@ -41,6 +41,7 @@ dependencies:
   firebase_auth: ^4.2.9
   validators: ^3.0.0
   font_awesome_flutter: ^10.4.0
+  google_sign_in: ^6.0.2
 
 dev_dependencies:
   flutter_test:
@@ -48,10 +49,12 @@ dev_dependencies:
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
+  # activated in the `analysis_options.yaml` file located at the ̦̦root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  custom_lint: ^0.2.12
+  riverpod_lint: ^1.1.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

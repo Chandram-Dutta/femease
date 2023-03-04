@@ -42,10 +42,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final AsyncValue<void> state = ref.watch(signUpControllerProvider);
-    ref.listen<AsyncValue>(
+    ref.listen<AsyncValue<void  >>(
       signUpControllerProvider,
       (_, state) {
-        if (!state.isRefreshing && state.hasError) {
+        if (state.hasError) {
           if (state.error is FirebaseAuthException) {
             showCupertinoDialog(
               context: context,
@@ -78,7 +78,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               ),
             );
           }
-        } else if (!state.isRefreshing && state.value) {
+        } else if (!state.isLoading && state.hasValue) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

@@ -39,10 +39,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   @override
   Widget build(BuildContext context) {
     final AsyncValue<void> state = ref.watch(signInControllerProvider);
-    ref.listen<AsyncValue>(
+    ref.listen<AsyncValue<void>>(
       signInControllerProvider,
       (_, state) {
-        if (!state.isRefreshing && state.hasError) {
+        if (state.hasError) {
           if (state.error is FirebaseAuthException) {
             showCupertinoDialog(
               context: context,
@@ -75,7 +75,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
               ),
             );
           }
-        } else if (!state.isRefreshing && state.value) {
+        } else if (!state.isLoading && state.hasValue) {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -180,8 +180,14 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                                   Theme.of(context).colorScheme.background,
                                 ),
                               ),
-                              onPressed: () {},
-                              label: const Text("Google"),
+                              onPressed: state.isLoading
+                                  ? null
+                                  : () => ref
+                                      .read(signInControllerProvider.notifier)
+                                      .signInWithGoogle(),
+                              label: state.isLoading
+                                  ? const CupertinoActivityIndicator()
+                                  : const Text("Google"),
                               icon: const FaIcon(
                                 FontAwesomeIcons.google,
                               ),

@@ -1,4 +1,5 @@
 import 'package:femease/app.dart';
+import 'package:femease/authentication/repository/auth_repository.dart';
 import 'package:femease/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +17,21 @@ void main() async {
   );
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
+        actions: [
+          IconButton(
+            onPressed: () =>
+                ref.watch(firebaseAuthRepositoryProvider).signOut(),
+            icon: const Icon(Icons.exit_to_app),
+          )
+        ],
       ),
     );
   }

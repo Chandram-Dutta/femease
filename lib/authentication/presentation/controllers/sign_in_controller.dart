@@ -19,6 +19,13 @@ class SignInController extends StateNotifier<AsyncValue<void>> {
       ),
     );
   }
+
+  Future<void> signInWithGoogle() async {
+    state = const AsyncLoading<void>();
+    state = await AsyncValue.guard<void>(
+      () => authRepository.signInWithGoogle(),
+    );
+  }
 }
 
 final signInControllerProvider =
