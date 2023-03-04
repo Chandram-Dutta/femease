@@ -1,4 +1,6 @@
 import 'package:femease/authentication/repository/auth_repository.dart';
+import 'package:femease/forum/presentation/pages/forum_page.dart';
+import 'package:femease/habit/presentation/pages/habit_page.dart';
 import 'package:femease/menstruation_cycle/presentation/pages/menstruation_cycle.dart';
 import 'package:femease/safety/presentation/pages/safety_page.dart';
 import 'package:flutter/material.dart';
@@ -128,16 +130,36 @@ class HomePage extends ConsumerWidget {
                       },
                     ),
                     HomePageButton(
-                      imageUrl: "https://picsum.photos/200",
+                      imageUrl: "assets/images/community.png",
                       title: "Forum",
                       tag: 'forum',
-                      navigateFunction: () {},
+                      navigateFunction: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ForumPage(
+                              imageUrl: "assets/images/community.png",
+                              tag: "forum",
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     HomePageButton(
-                      imageUrl: "https://picsum.photos/200",
+                      imageUrl: "assets/images/habit_tracker.png",
                       title: "Habit\nTracker",
                       tag: 'habit',
-                      navigateFunction: () {},
+                      navigateFunction: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HabitPage(
+                              imageUrl: "assets/images/habit_tracker.png",
+                              tag: "habit",
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -162,6 +184,7 @@ class HomePageButton extends StatelessWidget {
   final String imageUrl;
   final String title;
   final String tag;
+  // ignore: prefer_typing_uninitialized_variables
   final navigateFunction;
 
   @override
@@ -196,7 +219,7 @@ class HomePageButton extends StatelessWidget {
               child: Text(
                 title,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: Theme.of(context).colorScheme.secondaryContainer,
+                      color: Theme.of(context).colorScheme.secondary,
                     ),
               ),
             ),
