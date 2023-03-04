@@ -133,9 +133,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                               ),
                         ),
                         Text(
-                          "Subtitle",
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        )
+                          "Making womanhood easy...",
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        ),
                       ],
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:blur/blur.dart';
+import 'package:calendar_view/calendar_view.dart';
 import 'package:flutter/material.dart';
 
 class MenstrualCyclePage extends StatelessWidget {
@@ -40,6 +41,21 @@ class MenstrualCyclePage extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            child: Column(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: const Center(
+                    child: MonthView(
+                      width: 200,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );

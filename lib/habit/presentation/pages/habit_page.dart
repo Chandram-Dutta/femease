@@ -21,7 +21,7 @@ class HabitPage extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Theme.of(context).colorScheme.secondary,
         ),
-        title: const Text("Forum"),
+        title: const Text("Habit Tracker"),
         backgroundColor: Colors.transparent,
       ),
       body: Stack(

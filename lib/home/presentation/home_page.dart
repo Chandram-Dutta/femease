@@ -1,7 +1,7 @@
 import 'package:femease/authentication/repository/auth_repository.dart';
 import 'package:femease/forum/presentation/pages/forum_page.dart';
 import 'package:femease/habit/presentation/pages/habit_page.dart';
-import 'package:femease/menstruation_cycle/presentation/pages/menstruation_cycle.dart';
+import 'package:femease/menstruation_cycle/presentation/pages/menstruation_cycle_page.dart';
 import 'package:femease/safety/presentation/pages/safety_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';

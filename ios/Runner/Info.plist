@@ -16,6 +16,10 @@
 		</dict>
 	</array>
 	<!-- End of the Google Sign-in Section -->
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	  <string>tel</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

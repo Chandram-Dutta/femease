@@ -1,4 +1,5 @@
 import 'package:blur/blur.dart';
+import 'package:femease/safety/presentation/pages/emergency_contacts_page.dart';
 import 'package:flutter/material.dart';
 
 class SafetyPage extends StatelessWidget {
@@ -28,7 +29,12 @@ class SafetyPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const EmergencyContactsPage(),
+          ),
+        ),
         label: const Text(
           "Add Emergency Contacts",
         ),
@@ -105,21 +111,6 @@ class SafetyPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      ListTile(
-                        title: Text(
-                          "Fire Emergency",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        ),
-                        trailing: FilledButton.icon(
-                          onPressed: () {},
-                          label: const Text("Contact"),
-                          icon: const Icon(
-                            Icons.call_outlined,
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
