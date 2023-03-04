@@ -33,6 +33,11 @@ class HomePage extends ConsumerWidget {
           )
         ],
       ),
+      body: Center(
+        child: Text(
+          ref.watch(firebaseAuthRepositoryProvider).currentUser?.email ?? "",
+        ),
+      ),
     );
   }
 }

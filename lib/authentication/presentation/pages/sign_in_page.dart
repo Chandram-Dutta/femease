@@ -1,6 +1,8 @@
 import 'package:femease/authentication/presentation/controllers/sign_in_controller.dart';
 import 'package:femease/authentication/presentation/pages/sign_up_page.dart';
 import 'package:femease/main.dart';
+import 'package:femease/onboarding/presentation/pages/onboarding.dart';
+import 'package:femease/user/repository/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +81,25 @@ class _SignInPageState extends ConsumerState<SignInPage> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const HomePage(),
+              builder: (context) => FutureBuilder(
+                future:
+                    ref.watch(firebaseUserRepositoryProvider).isUserPresent(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data == true) {
+                      return const HomePage();
+                    } else {
+                      return const OnboardingPage();
+                    }
+                  } else {
+                    return const Scaffold(
+                      body: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           );
         }

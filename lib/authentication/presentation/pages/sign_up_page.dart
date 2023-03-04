@@ -1,6 +1,8 @@
 import 'package:femease/authentication/presentation/controllers/sign_up_controller.dart';
 import 'package:femease/authentication/presentation/pages/sign_in_page.dart';
 import 'package:femease/main.dart';
+import 'package:femease/onboarding/presentation/pages/onboarding.dart';
+import 'package:femease/user/repository/user_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +44,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final AsyncValue<void> state = ref.watch(signUpControllerProvider);
-    ref.listen<AsyncValue<void  >>(
+    ref.listen<AsyncValue<void>>(
       signUpControllerProvider,
       (_, state) {
         if (state.hasError) {
@@ -82,7 +84,25 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => const HomePage(),
+              builder: (context) => FutureBuilder(
+                future:
+                    ref.watch(firebaseUserRepositoryProvider).isUserPresent(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data == true) {
+                      return const HomePage();
+                    } else {
+                      return const OnboardingPage();
+                    }
+                  } else {
+                    return const Scaffold(
+                      body: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                },
+              ),
             ),
           );
         }
