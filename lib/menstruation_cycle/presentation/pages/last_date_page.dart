@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class MenstrualDatePage extends ConsumerStatefulWidget {
   const MenstrualDatePage({
@@ -62,19 +61,17 @@ class _MenstrualDatePageState extends ConsumerState<MenstrualDatePage> {
             ),
             FilledButton(
               onPressed: () async {
-                var box = Hive.box('menstrution');
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.setBool('isDataPresent', true);
+                final box = Hive.box('menstrution');
                 final event = CalendarEventData(
                   title: "Next Menstrual Cycle",
-                  date: DateTime.now().add(const Duration(days: 28)),
-                  endDate: DateTime.now().add(const Duration(days: 34)),
-                  startTime: DateTime.now().add(const Duration(days: 28)),
-                  endTime: DateTime.now().add(const Duration(days: 34)),
+                  date: _selectedDate.add(const Duration(days: 28)),
+                  endDate: _selectedDate.add(const Duration(days: 34)),
+                  startTime: _selectedDate.add(const Duration(days: 28)),
+                  endTime: _selectedDate.add(const Duration(days: 34)),
                   event: "Next Menstrual Cycle",
                 );
-                box.put('nextEvent', event);
-                box.put('isPresent', true);
+                await box.put('prevEvent', _selectedDate);
+                await box.put('isPresent', true);
                 CalendarControllerProvider.of(context).controller.add(event);
                 Navigator.pushReplacement(
                   context,

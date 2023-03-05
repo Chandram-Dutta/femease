@@ -1,4 +1,5 @@
 import 'package:blur/blur.dart';
+import 'package:femease/forum/presentation/pages/buisness/for_hire/for_hire_page.dart';
 import 'package:femease/forum/presentation/pages/fitness/fitness_page.dart';
 import 'package:femease/forum/presentation/pages/fun/fun_page.dart';
 import 'package:femease/forum/presentation/pages/mental_health/mental_page.dart';
@@ -80,7 +81,7 @@ class ForumPage extends StatelessWidget {
                       },
                     ),
                     ListTile(
-                      title: const Text("Yoga and Meditation"),
+                      title: const Text("Mindfulness"),
                       leading: const Icon(Icons.self_improvement_rounded),
                       subtitle:
                           const Text("Yoga and Meditation related discussions"),
@@ -94,11 +95,19 @@ class ForumPage extends StatelessWidget {
                         );
                       },
                     ),
-                    const ListTile(
-                      leading: Icon(Icons.business),
-                      title: Text("Buisness"),
-                      subtitle: Text("Buisness powerhouse"),
-                      trailing: Icon(Icons.arrow_forward_ios),
+                    ListTile(
+                      leading: const Icon(Icons.business),
+                      title: const Text("Buisness"),
+                      subtitle: const Text("Buisness powerhouse"),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ForHirePage(),
+                          ),
+                        );
+                      },
                     ),
                     // const ListTile(
                     //   leading: Icon(Icons.female),

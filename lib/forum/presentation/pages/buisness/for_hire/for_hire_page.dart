@@ -1,7 +1,7 @@
 import 'package:femease/forum/domain/question_model.dart';
+import 'package:femease/forum/presentation/pages/buisness/for_hire/for_hire_ask_page.dart';
+import 'package:femease/forum/presentation/pages/buisness/for_hire/for_hire_question_page.dart';
 import 'package:femease/forum/presentation/pages/fitness/fitness_question_page.dart';
-import 'package:femease/forum/presentation/pages/mental_health/mental_question_page.dart';
-import 'package:femease/forum/presentation/pages/yoga/yoga_ask_page.dart';
 import 'package:femease/forum/repository/forum_repository.dart';
 import 'package:femease/user/repository/user_repository.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,26 +9,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class YogaPage extends ConsumerWidget {
-  const YogaPage({super.key});
+class ForHirePage extends ConsumerWidget {
+  const ForHirePage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Mindfulness"),
+        title: const Text("Buissness"),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const YogaAskPage(),
+            builder: (context) => const ForHireAskPage(),
           ),
         ),
         label: const Text("Ask"),
         icon: const Icon(Icons.add),
       ),
-      body: ref.watch(forumListProvider("yoga")).when(
+      body: ref.watch(forumListProvider("forhire")).when(
             data: (data) => ListView.builder(
               itemCount: data.docs.length,
               itemBuilder: (context, index) {
@@ -42,7 +42,8 @@ class YogaPage extends ConsumerWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MentalQuestionPage(
+                        //todo
+                        builder: (context) => ForHireQuestionPage(
                           mentalQuestion: data.docs[index],
                         ),
                       ),

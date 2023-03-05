@@ -1,3 +1,4 @@
+import 'package:calendar_view/calendar_view.dart';
 import 'package:femease/authentication/repository/auth_repository.dart';
 import 'package:femease/forum/presentation/pages/forum_page.dart';
 import 'package:femease/habit/presentation/pages/habit_page.dart';
@@ -9,14 +10,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
-  Future<bool?> isActive() async {
+  Future<bool?> isActive(BuildContext context) async {
     final box = Hive.box('menstrution');
-    return box.get('isActive');
+
+    DateTime prevEvent = box.get('prevEvent');
+
+    CalendarControllerProvider.of(context).controller.add(
+          CalendarEventData(
+            title: "Next Menstrual Cycle",
+            date: prevEvent.add(const Duration(days: 28)),
+            endDate: prevEvent.add(const Duration(days: 34)),
+            startTime: prevEvent.add(const Duration(days: 28)),
+            endTime: prevEvent.add(const Duration(days: 34)),
+            event: "Next Menstrual Cycle",
+          ),
+        );
+    // return true;
+    return !(box.get('isPresent') as bool);
   }
 
   @override
@@ -162,30 +177,43 @@ class HomePage extends ConsumerWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => FutureBuilder(
-                              future: isActive(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  if (snapshot.data ?? false) {
-                                    return const MenstrualQuestionPage();
+                                future: isActive(context),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    if (snapshot.data ?? false) {
+                                      return const MenstrualQuestionPage();
+                                    } else {
+                                      return const MenstrualCyclePage(
+                                        imageUrl: "assets/images/1.png",
+                                        tag: "menstrual",
+                                      );
+                                    }
                                   } else {
-                                    return const MenstrualCyclePage(
-                                      imageUrl: "assets/images/1.png",
-                                      tag: "menstrual",
+                                    return const Scaffold(
+                                      body: Center(
+                                        child: CupertinoActivityIndicator(),
+                                      ),
                                     );
                                   }
-                                } else {
-                                  const Scaffold(
-                                    body: Center(
-                                      child: CupertinoActivityIndicator(),
-                                    ),
-                                  );
                                 }
-                                return const MenstrualQuestionPage(
-                                    // imageUrl: "assets/images/menstualcycle.png",
-                                    // tag: "menstrual",
-                                    );
-                              },
-                            ),
+                                // if (snapshot.hasData) {
+                                //   if (snapshot.data ?? false) {
+                                //     return const MenstrualQuestionPage();
+                                //   } else {
+                                //     return const MenstrualCyclePage(
+                                //       imageUrl: "assets/images/1.png",
+                                //       tag: "menstrual",
+                                //     );
+                                //   }
+                                // } else {
+                                //   const Scaffold(
+                                //     body: Center(
+                                //       child: CupertinoActivityIndicator(),
+                                //     ),
+                                //   );
+                                // }
+                                // },
+                                ),
                           ),
                         );
                       },
