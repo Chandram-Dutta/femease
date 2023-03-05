@@ -1,6 +1,7 @@
 import 'package:femease/authentication/repository/auth_repository.dart';
 import 'package:femease/forum/presentation/pages/forum_page.dart';
 import 'package:femease/habit/presentation/pages/habit_page.dart';
+import 'package:femease/home/controller/alert_controller.dart';
 import 'package:femease/menstruation_cycle/presentation/pages/menstruation_cycle_page.dart';
 import 'package:femease/menstruation_cycle/presentation/pages/question_page.dart';
 import 'package:femease/safety/presentation/pages/safety_page.dart';
@@ -8,18 +9,41 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   Future<bool?> isActive() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('isDataPresent');
+    final box = Hive.box('menstrution');
+    return box.get('isActive');
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final AsyncValue<void> state = ref.watch(alertControllerProvider);
+    ref.listen<AsyncValue<void>>(
+      alertControllerProvider,
+      (_, state) {
+        if (state.hasError) {
+          showCupertinoDialog(
+            context: context,
+            builder: (context) => CupertinoAlertDialog(
+              title: const Text("Error"),
+              content: Text(
+                state.error.toString(),
+              ),
+              actions: [
+                CupertinoDialogAction(
+                  child: const Text("OK"),
+                  onPressed: () => Navigator.of(context).pop(),
+                )
+              ],
+            ),
+          );
+        }
+      },
+    );
     return Scaffold(
       bottomNavigationBar: NavigationBar(
         destinations: const [
@@ -71,11 +95,19 @@ class HomePage extends ConsumerWidget {
                       spreadRadius: 0,
                       blurRadius: 20,
                       borderRadius: BorderRadius.circular(100),
-                      onPressed: () {},
-                      child: Text(
-                        "Alert",
-                        style: Theme.of(context).textTheme.headlineLarge,
-                      ),
+                      onPressed: state.isLoading
+                          ? null
+                          : () =>
+                              ref.read(alertControllerProvider.notifier).alert(
+                                recipents: [],
+                                callNumber: "+919833944611",
+                              ),
+                      child: state.isLoading
+                          ? const CupertinoActivityIndicator()
+                          : Text(
+                              "Alert",
+                              style: Theme.of(context).textTheme.headlineLarge,
+                            ),
                     ),
                   ),
                   const SizedBox(
@@ -106,7 +138,7 @@ class HomePage extends ConsumerWidget {
                   ),
                   children: [
                     HomePageButton(
-                      imageUrl: "assets/images/safety.png",
+                      imageUrl: "assets/images/4.png",
                       title: "Safety",
                       tag: "safety",
                       navigateFunction: () {
@@ -114,7 +146,7 @@ class HomePage extends ConsumerWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const SafetyPage(
-                              imageUrl: "assets/images/safety.png",
+                              imageUrl: "assets/images/4.png",
                               tag: "safety",
                             ),
                           ),
@@ -122,7 +154,7 @@ class HomePage extends ConsumerWidget {
                       },
                     ),
                     HomePageButton(
-                      imageUrl: "assets/images/menstualcycle.png",
+                      imageUrl: "assets/images/1.png",
                       title: "Menstrual\nCycle",
                       tag: 'menstrual',
                       navigateFunction: () {
@@ -130,36 +162,36 @@ class HomePage extends ConsumerWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => FutureBuilder(
-                                future: isActive(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    if (snapshot.data ?? false) {
-                                      return const MenstrualQuestionPage();
-                                    } else {
-                                      return const MenstrualCyclePage(
-                                        imageUrl:
-                                            "assets/images/menstualcycle.png",
-                                        tag: "menstrual",
-                                      );
-                                    }
+                              future: isActive(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  if (snapshot.data ?? false) {
+                                    return const MenstrualQuestionPage();
                                   } else {
-                                    const Scaffold(
-                                      body: Center(
-                                        child: CupertinoActivityIndicator(),
-                                      ),
+                                    return const MenstrualCyclePage(
+                                      imageUrl: "assets/images/1.png",
+                                      tag: "menstrual",
                                     );
                                   }
-                                  return const MenstrualQuestionPage(
-                                      // imageUrl: "assets/images/menstualcycle.png",
-                                      // tag: "menstrual",
-                                      );
-                                }),
+                                } else {
+                                  const Scaffold(
+                                    body: Center(
+                                      child: CupertinoActivityIndicator(),
+                                    ),
+                                  );
+                                }
+                                return const MenstrualQuestionPage(
+                                    // imageUrl: "assets/images/menstualcycle.png",
+                                    // tag: "menstrual",
+                                    );
+                              },
+                            ),
                           ),
                         );
                       },
                     ),
                     HomePageButton(
-                      imageUrl: "assets/images/community.png",
+                      imageUrl: "assets/images/2.png",
                       title: "Community",
                       tag: 'forum',
                       navigateFunction: () {
@@ -167,7 +199,7 @@ class HomePage extends ConsumerWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const ForumPage(
-                              imageUrl: "assets/images/community.png",
+                              imageUrl: "assets/images/2.png",
                               tag: "forum",
                             ),
                           ),
@@ -175,7 +207,7 @@ class HomePage extends ConsumerWidget {
                       },
                     ),
                     HomePageButton(
-                      imageUrl: "assets/images/habit_tracker.png",
+                      imageUrl: "assets/images/3.png",
                       title: "Habit\nTracker",
                       tag: 'habit',
                       navigateFunction: () {
@@ -183,7 +215,7 @@ class HomePage extends ConsumerWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const HabitPage(
-                              imageUrl: "assets/images/habit_tracker.png",
+                              imageUrl: "assets/images/3.png",
                               tag: "habit",
                             ),
                           ),

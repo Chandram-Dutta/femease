@@ -109,185 +109,225 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
       },
     );
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Image.asset(
+                "assets/images/signin.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              right: 10,
+              top: 50,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Hero(
-                    tag: "logo",
-                    child: Column(
-                      children: [
-                        Text(
-                          "FemEase",
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayLarge
-                              ?.copyWith(
-                                fontFamily: 'FugazOne',
-                              ),
-                        ),
-                        Text(
-                          "Making womanhood easy...",
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        ),
-                      ],
-                    ),
+                  Image.asset(
+                    "assets/images/logotext.png",
+                    height: 30,
                   ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  TextFormField(
-                    controller: _emailController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your email";
-                      } else if (!isEmail(value)) {
-                        return "Please enter a valid email";
-                      } else {
-                        return null;
-                      }
-                    },
-                    decoration: const InputDecoration(
-                      labelText: "Email",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(24),
+                  Text(
+                    "Making Womanhood Easy...",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.background,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                    ),
                   ),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  TextFormField(
-                    controller: _passwordController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your password";
-                      } else if (value.length < 6) {
-                        return "Password must be at least 6 characters long";
-                      } else {
-                        return null;
-                      }
-                    },
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: "Password",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(24),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  TextFormField(
-                    controller: _confirmPasswordController,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Please enter your password";
-                      } else if (value.length < 6) {
-                        return "Password must be at least 6 characters long";
-                      } else if (value != _passwordController.text) {
-                        return "Passwords do not match";
-                      } else {
-                        return null;
-                      }
-                    },
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: "Confirm Password",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(24),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 18),
-                  Hero(
-                    tag: "signButton",
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: SizedBox(
-                            height: 60,
-                            child: FilledButton.tonalIcon(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(
-                                  Theme.of(context).colorScheme.onBackground,
-                                ),
-                                foregroundColor: MaterialStateProperty.all(
-                                  Theme.of(context).colorScheme.background,
-                                ),
-                              ),
-                              onPressed: () {},
-                              label: const Text("Google"),
-                              icon: const FaIcon(
-                                FontAwesomeIcons.google,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: SizedBox(
-                            height: 60,
-                            child: FilledButton(
-                              onPressed: state.isLoading
-                                  ? null
-                                  : () {
-                                      if (_formKey.currentState!.validate()) {
-                                        ref
-                                            .read(signUpControllerProvider
-                                                .notifier)
-                                            .signUp(
-                                              email: _emailController.text,
-                                              password:
-                                                  _passwordController.text,
-                                            );
-                                      }
-                                    },
-                              child: state.isLoading
-                                  ? const CupertinoActivityIndicator()
-                                  : const Text("Sign Up"),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("Already have an account?"),
-                      TextButton(
-                        onPressed: state.isLoading
-                            ? null
-                            : () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignInPage(),
-                                  ),
-                                );
-                              },
-                        child: const Text("Sign In"),
-                      )
-                    ],
-                  )
                 ],
               ),
             ),
-          ),
+            Positioned(
+              left: 7,
+              top: MediaQuery.of(context).size.height * 0.2,
+              child: Image.asset("assets/images/logoonwhite.png"),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.5,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  child: Form(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextFormField(
+                            controller: _emailController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter your email";
+                              } else if (!isEmail(value)) {
+                                return "Please enter a valid email";
+                              } else {
+                                return null;
+                              }
+                            },
+                            decoration: const InputDecoration(
+                              labelText: "Email",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(24),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          TextFormField(
+                            controller: _passwordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter your password";
+                              } else if (value.length < 6) {
+                                return "Password must be at least 6 characters long";
+                              } else {
+                                return null;
+                              }
+                            },
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              labelText: "Password",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(24),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          TextFormField(
+                            controller: _confirmPasswordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter your password";
+                              } else if (value.length < 6) {
+                                return "Password must be at least 6 characters long";
+                              } else if (value != _passwordController.text) {
+                                return "Passwords do not match";
+                              } else {
+                                return null;
+                              }
+                            },
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              labelText: "Confirm Password",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(24),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                          Hero(
+                            tag: "signButton",
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 60,
+                                    child: FilledButton.icon(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .onBackground,
+                                        ),
+                                        foregroundColor:
+                                            MaterialStateProperty.all(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                        ),
+                                      ),
+                                      onPressed: state.isLoading
+                                          ? null
+                                          : () => ref
+                                              .read(
+                                                signUpControllerProvider
+                                                    .notifier,
+                                              )
+                                              .signInWithGoogle(),
+                                      label: state.isLoading
+                                          ? const CupertinoActivityIndicator()
+                                          : const Text("Google"),
+                                      icon: const FaIcon(
+                                        FontAwesomeIcons.google,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: SizedBox(
+                                    height: 60,
+                                    child: FilledButton(
+                                      onPressed: state.isLoading
+                                          ? null
+                                          : () {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                ref
+                                                    .read(
+                                                        signUpControllerProvider
+                                                            .notifier)
+                                                    .signUp(
+                                                      email:
+                                                          _emailController.text,
+                                                      password:
+                                                          _passwordController
+                                                              .text,
+                                                    );
+                                              }
+                                            },
+                                      child: state.isLoading
+                                          ? const CupertinoActivityIndicator()
+                                          : const Text("Sign Up"),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Already have an account?"),
+                              TextButton(
+                                onPressed: state.isLoading
+                                    ? null
+                                    : () {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SignInPage(),
+                                          ),
+                                        );
+                                      },
+                                child: const Text("Sign In"),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

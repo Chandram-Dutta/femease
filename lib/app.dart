@@ -7,9 +7,11 @@ import 'package:femease/theme/color_schemes.g.dart';
 import 'package:femease/user/repository/user_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 
 class App extends ConsumerWidget {
-  const App({super.key});
+  App({super.key});
+  final box = Hive.box('menstrution');
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

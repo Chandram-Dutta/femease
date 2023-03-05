@@ -14,8 +14,13 @@ class MainOnboarding extends StatelessWidget {
           children: [
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              child:
-                  Image.asset("assets/images/signintop.png", fit: BoxFit.fill),
+              child: Hero(
+                tag: "topbar",
+                child: Image.asset(
+                  "assets/images/signintop.png",
+                  fit: BoxFit.fill,
+                ),
+              ),
             ),
             Positioned(
               top: MediaQuery.of(context).size.height * 0.3,
@@ -38,7 +43,10 @@ class MainOnboarding extends StatelessWidget {
             Positioned(
               left: 7,
               top: MediaQuery.of(context).size.height * 0.6,
-              child: Image.asset("assets/images/logoonwhite.png"),
+              child: Hero(
+                tag: "logo",
+                child: Image.asset("assets/images/logoonwhite.png"),
+              ),
             ),
             Positioned(
               bottom: 50,

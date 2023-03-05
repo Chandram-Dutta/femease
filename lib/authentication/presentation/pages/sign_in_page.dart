@@ -106,198 +106,207 @@ class _SignInPageState extends ConsumerState<SignInPage> {
       },
     );
     return Scaffold(
-      body: Stack(
-        children: [
-          // SizedBox(
-          //   width: MediaQuery.of(context).size.width,
-          //   child: Image.asset(
-          //     "assets/images/signintop.png",
-          //     fit: BoxFit.fill,
-          //   ),
-          // ),
-          Center(
-            child: SingleChildScrollView(
-              child: Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Hero(
-                        tag: "logo",
-                        child: Column(
-                          children: [
-                            Text(
-                              "FemEase",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge
-                                  ?.copyWith(
-                                    fontFamily: 'FugazOne',
-                                  ),
-                            ),
-                            Text(
-                              "Making womanhood easy...",
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                          ],
+      body: SizedBox(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Stack(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Hero(
+                tag: "topbar",
+                child: Image.asset(
+                  "assets/images/signin.png",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Positioned(
+              right: 10,
+              top: 50,
+              child: Column(
+                children: [
+                  Image.asset(
+                    "assets/images/logotext.png",
+                    height: 30,
+                  ),
+                  Text(
+                    "Making Womanhood Easy...",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.background,
+                          fontWeight: FontWeight.bold,
                         ),
-                      ),
-                      const SizedBox(
-                        height: 18,
-                      ),
-                      TextFormField(
-                        controller: _emailController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter your email";
-                          } else if (!isEmail(value)) {
-                            return "Please enter a valid email";
-                          } else {
-                            return null;
-                          }
-                        },
-                        decoration: const InputDecoration(
-                          labelText: "Email",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(24),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 18,
-                      ),
-                      TextFormField(
-                        controller: _passwordController,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return "Please enter your password";
-                          } else if (value.length < 6) {
-                            return "Password must be at least 6 characters long";
-                          } else {
-                            return null;
-                          }
-                        },
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          labelText: "Password",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(24),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Hero(
-                        tag: "signButton",
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: SizedBox(
-                                height: 60,
-                                child: FilledButton.icon(
-                                  style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                      Theme.of(context)
-                                          .colorScheme
-                                          .onBackground,
-                                    ),
-                                    foregroundColor: MaterialStateProperty.all(
-                                      Theme.of(context).colorScheme.background,
-                                    ),
-                                  ),
-                                  onPressed: state.isLoading
-                                      ? null
-                                      : () => ref
-                                          .read(
-                                              signInControllerProvider.notifier)
-                                          .signInWithGoogle(),
-                                  label: state.isLoading
-                                      ? const CupertinoActivityIndicator()
-                                      : const Text("Google"),
-                                  icon: const FaIcon(
-                                    FontAwesomeIcons.google,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: SizedBox(
-                                height: 60,
-                                child: FilledButton(
-                                  onPressed: state.isLoading
-                                      ? null
-                                      : () {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            ref
-                                                .read(signInControllerProvider
-                                                    .notifier)
-                                                .signIn(
-                                                  email: _emailController.text,
-                                                  password:
-                                                      _passwordController.text,
-                                                );
-                                          }
-                                        },
-                                  child: state.isLoading
-                                      ? const CupertinoActivityIndicator()
-                                      : const Text("Sign In"),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Row(
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+              left: 7,
+              top: MediaQuery.of(context).size.height * 0.2,
+              child: Hero(
+                tag: "logo",
+                child: Image.asset("assets/images/logoonwhite.png"),
+              ),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.5,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  child: Form(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don't have an account?"),
-                          TextButton(
-                            onPressed: state.isLoading
-                                ? null
-                                : () {
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignUpPage(),
+                          TextFormField(
+                            controller: _emailController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter your email";
+                              } else if (!isEmail(value)) {
+                                return "Please enter a valid email";
+                              } else {
+                                return null;
+                              }
+                            },
+                            decoration: const InputDecoration(
+                              labelText: "Email",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(24),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 18,
+                          ),
+                          TextFormField(
+                            controller: _passwordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter your password";
+                              } else if (value.length < 6) {
+                                return "Password must be at least 6 characters long";
+                              } else {
+                                return null;
+                              }
+                            },
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              labelText: "Password",
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(24),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Hero(
+                            tag: "signButton",
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: SizedBox(
+                                    height: 60,
+                                    child: FilledButton.icon(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .onBackground,
+                                        ),
+                                        foregroundColor:
+                                            MaterialStateProperty.all(
+                                          Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                        ),
                                       ),
-                                    );
-                                  },
-                            child: const Text("Create one"),
+                                      onPressed: state.isLoading
+                                          ? null
+                                          : () => ref
+                                              .read(signInControllerProvider
+                                                  .notifier)
+                                              .signInWithGoogle(),
+                                      label: state.isLoading
+                                          ? const CupertinoActivityIndicator()
+                                          : const Text("Google"),
+                                      icon: const FaIcon(
+                                        FontAwesomeIcons.google,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 8,
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: SizedBox(
+                                    height: 60,
+                                    child: FilledButton(
+                                      onPressed: state.isLoading
+                                          ? null
+                                          : () {
+                                              if (_formKey.currentState!
+                                                  .validate()) {
+                                                ref
+                                                    .read(
+                                                        signInControllerProvider
+                                                            .notifier)
+                                                    .signIn(
+                                                      email:
+                                                          _emailController.text,
+                                                      password:
+                                                          _passwordController
+                                                              .text,
+                                                    );
+                                              }
+                                            },
+                                      child: state.isLoading
+                                          ? const CupertinoActivityIndicator()
+                                          : const Text("Sign In"),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text("Don't have an account?"),
+                              TextButton(
+                                onPressed: state.isLoading
+                                    ? null
+                                    : () {
+                                        Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SignUpPage(),
+                                          ),
+                                        );
+                                      },
+                                child: const Text("Create one"),
+                              )
+                            ],
                           )
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
-
-// class SignInTop extends CustomPainter {
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     // TODO: implement paint
-//   }
-
-//   @override
-//   bool shouldRepaint(CustomPainter oldDelegate) {
-//     // TODO: implement shouldRepaint
-//     return null;
-//   }
-// }
